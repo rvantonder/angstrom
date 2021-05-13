@@ -513,6 +513,15 @@ let many_till p t =
   fix (fun m ->
     (t *> return []) <|> (lift2 cons p m))
 
+let not_followed_by p =
+  { run = fun input pos more fail succ ->
+        let succ' _input _pos _more _ =
+          fail input pos more [] "not_followed_by refuted" in
+        let fail' _input _pos _more _ _ =
+          succ input pos more () in
+        p.run input pos more fail' succ'
+  }
+
 let sep_by1 s p =
   fix (fun m ->
     lift2 cons p ((s *> m) <|> return []))

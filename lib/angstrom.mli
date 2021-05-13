@@ -300,6 +300,10 @@ val sep_by : _ t -> 'a t -> 'a list t
 val sep_by1 : _ t -> 'a t -> 'a list t
 (** [sep_by1 s p] runs [p] {i one} or more times, interspersing runs of [s] in between. *)
 
+val not_followed_by : _ t -> unit t
+(** [not_followed_by p] succeeds when [p] does not succeed at the current
+     position. Otherwise, it fails. It does not consume input. *)
+
 val skip_many : _ t -> unit t
 (** [skip_many p] runs [p] {i zero} or more times, discarding the results. *)
 
